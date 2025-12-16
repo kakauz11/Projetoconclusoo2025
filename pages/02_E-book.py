@@ -1,5 +1,10 @@
 import streamlit as st
 st.title("E-Book")
+
+colunas = st.columns(2)
+colunas[0].image("Imagens/1.png", width=250)
+colunas[1].image("Imagens/9.png", width=250)
+
 st.write("Para a formação do livro foi realizada a análise de documentos históricos" \
 " da cidade e análise bibliográfica de artigos, também o uso do chatGPT e Canva para a formação" \
 " estética do material e criação da personagem. ")
@@ -7,15 +12,34 @@ st.write("É importante ressaltar que a escolha da Gabriela como uma menina negr
 " e sim para que mostrasse a representação afrobrasileira do município, e para trazer a tona sujeitos invisibilizados" \
 " no processo de construção do repasse de histórias e acontecimentos.")
 "---"
-st.write("Acesso ao e-book")
-st.write("Acesso ao artigo")
+
+st.markdown("Abaixo você podera ter acesso ao artigo explicando todo o projeto e o ebook do livro apenas clicando no botão indicado.")
+
+with open("Imagens/ebook.pdf", "rb") as pdf:
+    st.download_button(
+        label="📄 Baixar ebook",
+        data=pdf,
+        file_name="ebook.pdf",
+        mime="application/pdf"
+    )
+
+with open("Imagens/Artigo.pdf", "rb") as pdf:
+    st.download_button(
+        label="📄 Baixar Artigo",
+        data=pdf,
+        file_name="Artigo.pdf",
+        mime="application/pdf"
+    )
 "---"
 st.write("Por favor, responda ao formulário para ajudar a manter a atualização e andamento do projeto!")
 
-nasceu = st.text_input("Você nasceu em assú?", placeholder="Responda com sim ou não...")
-mora = st.text_input("Você reside em assú atualmente?", placeholder="Responda com sim ou não...")
-trabalho = st.text_input("Você reside em outra cidade porém estuda/trabalha em assú?", placeholder="Responda com sim ou não...")
-conhecer = st.text_input("Você conhece a história do centro de assú?", placeholder="Responda com sim ou não...")
-escola = st.text_input("Você teve contato com a história do centro durante o seu período escolar", placeholder="Responda com sim ou não...")
-plataforma = st.text_input("Você acha que o site ajudou ou motivou você a conhecer mais sobre a parte histórica da cidade?", placeholder="Responda com sim ou não...")
-sugestoes = st.text_input("Sugestões:", placeholder="Escreva sugestões para o melhoramento da plataforma...")
+with st.form("formFormulario"):
+    nasceu=st.selectbox("Você nasceu em assú?",["","Sim", "Não"] )
+    mora=st.selectbox("Você reside em assú atualmente?",["","Sim", "Não"])
+    trabalho =st.selectbox("Você reside em outra cidade porém estuda/trabalha em assú?", ["","Sim", "Não"])
+    conhecer =st.selectbox("Você conhece a história do centro de assú?", ["","Sim", "Não"])
+    escola =st.selectbox("Você teve contato com a história do centro durante o seu período escolar", ["","Sim", "Não"])
+    plataforma =st.selectbox("Você acha que o site ajudou ou motivou você a conhecer mais sobre a parte histórica da cidade?", ["","Sim", "Não"])
+    sugestoes = st.text_input("Sugestões:", placeholder="Escreva sugestões para o melhoramento da plataforma...")
+    btnformFormulario = st.form_submit_button("Salvar respostas")
+    
