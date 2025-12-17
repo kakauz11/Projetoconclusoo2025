@@ -53,8 +53,8 @@ with st.form("formFormulario"):
 
     if btnformFormulario:
             if nasceu and mora and trabalho and conhecer and escola and plataforma and sugestoes:
-                novoquestionario=basedados.collection("025").document(id)
-                novoquestionario.set({
+                basedados.collection("id").add({
+                    "id": id,
                     "Você nasceu em assú?": nasceu,
                     "Você reside em assú atualmente?": mora,
                     "Você reside em outra cidade porém estuda/trabalha em assú?": trabalho,
