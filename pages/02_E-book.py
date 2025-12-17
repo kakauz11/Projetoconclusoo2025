@@ -1,10 +1,11 @@
 import streamlit as st
+import random
 from google.cloud import firestore
 
 st.title("E-Book")
 
 dicionario = dict(st.secrets["credencial"])
-basedados2 = firestore.Client.from_service_account_info(dicionario) 
+basedados = firestore.Client.from_service_account_info(dicionario) 
 
 colunas = st.columns(2)
 colunas[0].image("Imagens/1.png", width=250)
@@ -38,6 +39,8 @@ with open("Imagens/Artigo.pdf", "rb") as pdf:
 "---"
 st.write("Por favor, responda ao formulário para ajudar a manter a atualização e andamento do projeto!")
 
+id = random.randint(109, 1010 - 1)
+
 with st.form("formFormulario"):
     nasceu=st.selectbox("Você nasceu em assú?",["","Sim", "Não"] )
     mora=st.selectbox("Você reside em assú atualmente?",["","Sim", "Não"])
@@ -50,7 +53,7 @@ with st.form("formFormulario"):
 
     if btnformFormulario:
             if nasceu and mora and trabalho and conhecer and escola and plataforma and sugestoes:
-                novoquestionario=basedados2.collection("usuarios").document(apelido)
+                novoquestionario=basedados.collection("025").document(id)
                 novoquestionario.set({
                     "Você nasceu em assú?": nasceu,
                     "Você reside em assú atualmente?": mora,
