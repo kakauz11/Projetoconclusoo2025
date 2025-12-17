@@ -1,5 +1,10 @@
 import streamlit as st
+from google.cloud import firestore
+
 st.title("E-Book")
+
+dicionario = dict(st.secrets["credencial"])
+basedados2 = firestore.Client.from_service_account_info(dicionario) 
 
 colunas = st.columns(2)
 colunas[0].image("Imagens/1.png", width=250)
@@ -42,4 +47,22 @@ with st.form("formFormulario"):
     plataforma =st.selectbox("Você acha que o site ajudou ou motivou você a conhecer mais sobre a parte histórica da cidade?", ["","Sim", "Não"])
     sugestoes = st.text_input("Sugestões:", placeholder="Escreva sugestões para o melhoramento da plataforma...")
     btnformFormulario = st.form_submit_button("Salvar respostas")
+
+    if btnformFormulario:
+            if nasceu and mora and trabalho and conhecer and escola and plataforma and sugestoes:
+                novoquestionario=basedados2.collection("usuarios").document(apelido)
+                novoquestionario.set({
+                    "Você nasceu em assú?": nasceu,
+                    "Você reside em assú atualmente?": mora,
+                    "Você reside em outra cidade porém estuda/trabalha em assú?": trabalho,
+                    "Você conhece a história do centro de assú?": conhecer,
+                    "Você teve contato com a história do centro durante o seu período escolar": escola,
+                    "Você acha que o site ajudou ou motivou você a conhecer mais sobre a parte histórica da cidade?": plataforma,
+                    "Sugestões:": sugestoes
+                })
+                st.success("Suas respostas foram salvas com sucesso!")
+            else:
+                st.error("Preencha todos os campos.")
+
+    st.rerun()
     
