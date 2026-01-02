@@ -67,5 +67,4 @@ with st.form("formFormulario"):
             else:
                 st.error("Preencha todos os campos.")
 
-    st.rerun()
     
